@@ -1,4 +1,6 @@
 import { supabaseServer } from "@/lib/supabase.server";
+import { RecommendationTypeBadge } from "./RecommendationTypeBadge";
+import { ReportScrollAnimations } from "./ReportScrollAnimations";
 
 type ReportPageProps = {
   searchParams: Promise<{
@@ -91,9 +93,11 @@ export default async function ReportPage(props: ReportPageProps) {
     }
   }
 
+
   return (
     <div className="report-page-root relative">
       <div className="report-grain-overlay" />
+      <ReportScrollAnimations />
 
       <div className="relative z-10 mx-auto flex max-w-7xl justify-center px-4 py-10 sm:px-10 sm:py-12">
         <main className="w-full max-w-6xl overflow-hidden rounded-3xl bg-gradient-to-br from-[#0A0E27] via-[#111633] to-[#1A1F3A] shadow-xl border border-[#1F2645]">
@@ -144,7 +148,7 @@ export default async function ReportPage(props: ReportPageProps) {
 
         {/* Executive summary */}
         <section className="mt-12 mb-14 report-fade-in-up">
-          <div className="rounded-2xl border border-[#00D9FF4D] bg-gradient-to-br from-[#00D9FF1A] via-[#A594F91A] to-transparent px-6 py-6 sm:px-8 sm:py-7 backdrop-blur-md relative overflow-hidden">
+          <div data-report-scroll className="report-scroll-in rounded-2xl border border-[#00D9FF4D] bg-gradient-to-br from-[#00D9FF1A] via-[#A594F91A] to-transparent px-6 py-6 sm:px-8 sm:py-7 backdrop-blur-md relative overflow-hidden">
             <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#00D9FF] via-[#A594F9] to-[#FFB800]" />
             <h2 className="mt-3 text-2xl sm:text-3xl font-semibold text-[#00D9FF] mb-3">
               Executive Summary
@@ -156,7 +160,7 @@ export default async function ReportPage(props: ReportPageProps) {
 
             {/* Impact cards */}
             <div className="mt-6 grid gap-4 sm:grid-cols-3">
-              <div className="impact-card rounded-xl border border-white/10 bg-gradient-to-br from-[#A594F91A] to-[#00D9FF1A] px-4 py-4 text-center">
+              <div className="impact-card rounded-xl border border-white/10 bg-gradient-to-br from-[#A594F91A] to-[#00D9FF1A] px-4 py-4 text-center transition-all duration-300 hover:-translate-y-[5px] hover:border-[#A594F9]">
                 <div className="impact-label text-[11px] uppercase tracking-[0.18em] text-[#9CA3AF] mb-1">
                   Primary Goal
                 </div>
@@ -167,7 +171,7 @@ export default async function ReportPage(props: ReportPageProps) {
                   Direct lead-to-sale conversion improvement
                 </div>
               </div>
-              <div className="impact-card rounded-xl border border-white/10 bg-gradient-to-br from-[#A594F91A] to-[#00D9FF1A] px-4 py-4 text-center">
+              <div className="impact-card rounded-xl border border-white/10 bg-gradient-to-br from-[#A594F91A] to-[#00D9FF1A] px-4 py-4 text-center transition-all duration-300 hover:-translate-y-[5px] hover:border-[#A594F9]">
                 <div className="impact-label text-[11px] uppercase tracking-[0.18em] text-[#9CA3AF] mb-1">
                   Key Advantage
                 </div>
@@ -178,7 +182,7 @@ export default async function ReportPage(props: ReportPageProps) {
                   Zero missed opportunities from inbound demand
                 </div>
               </div>
-              <div className="impact-card rounded-xl border border-white/10 bg-gradient-to-br from-[#A594F91A] to-[#00D9FF1A] px-4 py-4 text-center">
+              <div className="impact-card rounded-xl border border-white/10 bg-gradient-to-br from-[#A594F91A] to-[#00D9FF1A] px-4 py-4 text-center transition-all duration-300 hover:-translate-y-[5px] hover:border-[#A594F9]">
                 <div className="impact-label text-[11px] uppercase tracking-[0.18em] text-[#9CA3AF] mb-1">
                   Response Time
                 </div>
@@ -209,7 +213,8 @@ export default async function ReportPage(props: ReportPageProps) {
               {competitors.map((comp: any, idx: number) => (
                 <article
                   key={comp.name ?? idx}
-                  className="competitor-card rounded-3xl border-2 border-white/10 bg-white/5 px-6 py-6 sm:px-7 sm:py-7 shadow-[0_18px_40px_rgba(0,0,0,0.4)]"
+                  data-report-scroll
+                  className="report-scroll-in competitor-card rounded-3xl border-2 border-white/10 bg-white/5 px-6 py-6 sm:px-7 sm:py-7 shadow-[0_18px_40px_rgba(0,0,0,0.4)] transition-all duration-300 hover:-translate-y-[5px] hover:border-[#FF6B6B] hover:shadow-[0_20px_40px_rgba(255,107,107,0.2)]"
                 >
                   <div className="flex items-start justify-between gap-3 border-b border-white/10 pb-4 mb-4">
                     <div>
@@ -386,7 +391,10 @@ export default async function ReportPage(props: ReportPageProps) {
             </div>
 
             <div className="grid gap-6 sm:grid-cols-2">
-              <div className="rounded-2xl border-2 border-[#4ECDC4] bg-gradient-to-br from-[#4ECDC41A] to-[#4ECDC40D] px-5 py-5">
+              <div
+                data-report-scroll
+                className="report-scroll-in rounded-2xl border-2 border-[#4ECDC4] bg-gradient-to-br from-[#4ECDC41A] to-[#4ECDC40D] px-5 py-5 transition-all duration-300 hover:-translate-y-[5px] hover:border-[#00D9FF] hover:shadow-[0_20px_40px_rgba(0,217,255,0.2)]"
+              >
                 <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#E5E7EB] mb-4">
                   <span className="inline-flex h-2 w-2 rounded-full bg-[#4ECDC4]" />
                   🎯 Quick Wins – High Impact, Low Effort
@@ -396,7 +404,7 @@ export default async function ReportPage(props: ReportPageProps) {
                   priority_matrix.high_impact_low_effort.map((item: string) => (
                     <div
                       key={item}
-                      className="mb-2 last:mb-0 cursor-pointer rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-[#F9FAFB] hover:border-white/40 hover:bg-white/10 transition"
+                      className="mb-2 last:mb-0 cursor-pointer rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-[#F9FAFB] transition-all duration-300 hover:translate-x-[5px] hover:border-white/30 hover:bg-white/10"
                     >
                       {item}
                     </div>
@@ -408,7 +416,10 @@ export default async function ReportPage(props: ReportPageProps) {
                 )}
               </div>
 
-              <div className="rounded-2xl border-2 border-[#FFB800] bg-gradient-to-br from-[#FFB8001A] to-[#FFB8000D] px-5 py-5">
+              <div
+                data-report-scroll
+                className="report-scroll-in rounded-2xl border-2 border-[#FFB800] bg-gradient-to-br from-[#FFB8001A] to-[#FFB8000D] px-5 py-5 transition-all duration-300 hover:-translate-y-[5px] hover:border-[#00D9FF] hover:shadow-[0_20px_40px_rgba(0,217,255,0.2)]"
+              >
                 <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#E5E7EB] mb-4">
                   <span className="inline-flex h-2 w-2 rounded-full bg-[#FFB800]" />
                   🚀 Strategic – High Impact, High Effort
@@ -418,7 +429,7 @@ export default async function ReportPage(props: ReportPageProps) {
                   priority_matrix.high_impact_high_effort.map((item: string) => (
                     <div
                       key={item}
-                      className="mb-2 last:mb-0 cursor-pointer rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-[#F9FAFB] hover:border-white/40 hover:bg-white/10 transition"
+                      className="mb-2 last:mb-0 cursor-pointer rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-[#F9FAFB] transition-all duration-300 hover:translate-x-[5px] hover:border-white/30 hover:bg-white/10"
                     >
                       {item}
                     </div>
@@ -430,7 +441,10 @@ export default async function ReportPage(props: ReportPageProps) {
                 )}
               </div>
 
-              <div className="rounded-2xl border-2 border-[#9CA3AF] bg-gradient-to-br from-[#9CA3AF1A] to-[#9CA3AF0D] px-5 py-5">
+              <div
+                data-report-scroll
+                className="report-scroll-in rounded-2xl border-2 border-[#9CA3AF] bg-gradient-to-br from-[#9CA3AF1A] to-[#9CA3AF0D] px-5 py-5 transition-all duration-300 hover:-translate-y-[5px] hover:border-[#00D9FF] hover:shadow-[0_20px_40px_rgba(0,217,255,0.2)]"
+              >
                 <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#E5E7EB] mb-4">
                   <span className="inline-flex h-2 w-2 rounded-full bg-[#9CA3AF]" />
                   ⚡ Low Priority – Low Impact, Low Effort
@@ -440,7 +454,7 @@ export default async function ReportPage(props: ReportPageProps) {
                   priority_matrix.low_impact_low_effort.map((item: string) => (
                     <div
                       key={item}
-                      className="mb-2 last:mb-0 cursor-pointer rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-[#F9FAFB] hover:border-white/40 hover:bg-white/10 transition"
+                      className="mb-2 last:mb-0 cursor-pointer rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-[#F9FAFB] transition-all duration-300 hover:translate-x-[5px] hover:border-white/30 hover:bg-white/10"
                     >
                       {item}
                     </div>
@@ -452,7 +466,10 @@ export default async function ReportPage(props: ReportPageProps) {
                 )}
               </div>
 
-              <div className="rounded-2xl border-2 border-[#FF6B6B] bg-gradient-to-br from-[#FF6B6B1A] to-[#FF6B6B0D] px-5 py-5">
+              <div
+                data-report-scroll
+                className="report-scroll-in rounded-2xl border-2 border-[#FF6B6B] bg-gradient-to-br from-[#FF6B6B1A] to-[#FF6B6B0D] px-5 py-5 transition-all duration-300 hover:-translate-y-[5px] hover:border-[#00D9FF] hover:shadow-[0_20px_40px_rgba(0,217,255,0.2)]"
+              >
                 <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#E5E7EB] mb-4">
                   <span className="inline-flex h-2 w-2 rounded-full bg-[#FF6B6B]" />
                   ⚠️ Reconsider – Low Impact, High Effort
@@ -462,7 +479,7 @@ export default async function ReportPage(props: ReportPageProps) {
                   priority_matrix.low_impact_high_effort.map((item: string) => (
                     <div
                       key={item}
-                      className="mb-2 last:mb-0 cursor-pointer rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-[#F9FAFB] hover:border-white/40 hover:bg-white/10 transition"
+                      className="mb-2 last:mb-0 cursor-pointer rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-[#F9FAFB] transition-all duration-300 hover:translate-x-[5px] hover:border-white/30 hover:bg-white/10"
                     >
                       {item}
                     </div>
@@ -494,7 +511,8 @@ export default async function ReportPage(props: ReportPageProps) {
               {recommendations.map((rec: any, idx: number) => (
                 <article
                   key={rec.solution_id ?? rec.title ?? idx}
-                  className="rounded-3xl border border-white/10 bg-white/5 px-6 py-6 sm:px-8 sm:py-8 shadow-[0_20px_40px_rgba(0,0,0,0.35)]"
+                  data-report-scroll
+                  className="report-scroll-in rounded-3xl border border-white/10 bg-white/5 px-6 py-6 sm:px-8 sm:py-8 shadow-[0_20px_40px_rgba(0,0,0,0.35)] transition-all duration-300 hover:-translate-y-[10px] hover:border-[#00D9FF] hover:shadow-[0_30px_60px_rgba(0,0,0,0.3)]"
                 >
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-5">
                     <div>
@@ -520,17 +538,7 @@ export default async function ReportPage(props: ReportPageProps) {
                         )}
                       </div>
                     </div>
-                    <span
-                      className={`priority-badge inline-flex items-center justify-center rounded-full px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] ${
-                        rec.implementation?.priority_level === "high"
-                          ? "bg-gradient-to-r from-[#4ECDC4] to-[#00D9FF] text-[#0A0E27]"
-                          : "bg-gradient-to-r from-[#FFB800] to-[#FF6B6B] text-[#0A0E27]"
-                      }`}
-                    >
-                      {rec.implementation?.priority_level
-                        ? `${rec.implementation.priority_level} priority`
-                        : "Priority"}
-                    </span>
+                    <RecommendationTypeBadge type={rec.recommendation_type} />
                   </div>
 
                   {/* Single top description: prefer solution_description, fall back to problem_opportunity */}
@@ -540,59 +548,43 @@ export default async function ReportPage(props: ReportPageProps) {
                     </div>
                   )}
 
-                  {/* Impact grid for this recommendation */}
-                  {rec.business_impact && (
-                    <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-6">
-                      <div className="impact-card rounded-xl border border-white/10 bg-gradient-to-br from-[#A594F91A] to-[#00D9FF1A] px-4 py-4 text-center">
-                        <div className="impact-label text-[10px] uppercase tracking-[0.16em] text-[#9CA3AF] mb-1">
-                          Revenue Impact
-                        </div>
-                        <div className="impact-value text-lg font-semibold text-[#00D9FF] mb-1">
-                          {rec.business_impact.revenue_impact ?? "High"}
-                        </div>
-                        <div className="impact-description text-[11px] text-[#E8EAEDCC]">
-                          {rec.business_impact.primary_benefit ??
-                            "Direct contribution to growth."}
-                        </div>
+                  {/* Impact cards: label, value, description */}
+                  {Array.isArray(rec.business_impact?.impact_cards) &&
+                    rec.business_impact.impact_cards.length > 0 && (
+                      <div className="mt-4 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mb-6">
+                        {rec.business_impact.impact_cards.map(
+                          (card: { label?: string; value?: string; description?: string }, i: number) => {
+                            const hasContent =
+                              card.label ||
+                              (card.value != null && card.value !== "") ||
+                              card.description;
+                            if (!hasContent) return null;
+                            return (
+                              <div
+                                key={i}
+                                className="impact-card rounded-xl border border-white/10 bg-gradient-to-br from-[#A594F91A] to-[#00D9FF1A] px-4 py-4 text-center transition-all duration-300 hover:-translate-y-[5px] hover:border-[#A594F9]"
+                              >
+                                {card.label && (
+                                  <div className="impact-label text-[10px] uppercase tracking-[0.16em] text-[#9CA3AF] mb-1">
+                                    {card.label}
+                                  </div>
+                                )}
+                                {card.value != null && card.value !== "" && (
+                                  <div className="impact-value text-lg font-semibold text-[#00D9FF] mb-1">
+                                    {card.value}
+                                  </div>
+                                )}
+                                {card.description && (
+                                  <div className="impact-description text-[11px] text-[#E8EAEDCC]">
+                                    {card.description}
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          }
+                        )}
                       </div>
-                      <div className="impact-card rounded-xl border border-white/10 bg-gradient-to-br from-[#A594F91A] to-[#00D9FF1A] px-4 py-4 text-center">
-                        <div className="impact-label text-[10px] uppercase tracking-[0.16em] text-[#9CA3AF] mb-1">
-                          ROI Example
-                        </div>
-                        <div className="impact-value text-lg font-semibold text-[#00D9FF] mb-1">
-                          ROI
-                        </div>
-                        <div className="impact-description text-[11px] text-[#E8EAEDCC]">
-                          {rec.business_impact.roi_indicators ??
-                            "Strong return relative to tool cost."}
-                        </div>
-                      </div>
-                      <div className="impact-card rounded-xl border border-white/10 bg-gradient-to-br from-[#A594F91A] to-[#00D9FF1A] px-4 py-4 text-center">
-                        <div className="impact-label text-[10px] uppercase tracking-[0.16em] text-[#9CA3AF] mb-1">
-                          Efficiency
-                        </div>
-                        <div className="impact-value text-lg font-semibold text-[#00D9FF] mb-1">
-                          +
-                        </div>
-                        <div className="impact-description text-[11px] text-[#E8EAEDCC]">
-                          {rec.business_impact.efficiency_gains ??
-                            "Frees time for higher-value work."}
-                        </div>
-                      </div>
-                      <div className="impact-card rounded-xl border border-white/10 bg-gradient-to-br from-[#A594F91A] to-[#00D9FF1A] px-4 py-4 text-center">
-                        <div className="impact-label text-[10px] uppercase tracking-[0.16em] text-[#9CA3AF] mb-1">
-                          Advantage
-                        </div>
-                        <div className="impact-value text-lg font-semibold text-[#00D9FF] mb-1">
-                          +
-                        </div>
-                        <div className="impact-description text-[11px] text-[#E8EAEDCC]">
-                          {rec.competitive_positioning?.notes ??
-                            "Creates or protects an edge versus competitors."}
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                    )}
 
                   {/* Tools */}
                   {Array.isArray(rec.existing_tools) &&
@@ -605,7 +597,7 @@ export default async function ReportPage(props: ReportPageProps) {
                           {rec.existing_tools.map((tool: any) => (
                             <div
                               key={tool.tool_name}
-                              className="tool-card rounded-2xl border border-[#00D9FF4D] bg-gradient-to-br from-[#1A1F3ACC] to-[#0A0E27CC] px-4 py-4"
+                              className="tool-card rounded-2xl border border-[#00D9FF4D] bg-gradient-to-br from-[#1A1F3ACC] to-[#0A0E27CC] px-4 py-4 transition-all duration-300 hover:border-[#00D9FF] hover:bg-white/[0.06]"
                             >
                               <div className="tool-name text-base font-semibold text-[#00D9FF] mb-1">
                                 {tool.tool_name}
@@ -642,13 +634,15 @@ export default async function ReportPage(props: ReportPageProps) {
                     )}
 
                   {/* Competitive advantage pill */}
-                  {rec.competitive_positioning?.notes && (
+                  {(rec.business_impact?.competitive_advantage ??
+                    rec.competitive_positioning?.notes) && (
                     <div className="mt-6 rounded-2xl bg-gradient-to-r from-[#4ECDC41A] via-[#A594F91A] to-transparent px-4 py-3 border border-white/10">
                       <p className="text-xs sm:text-sm font-semibold text-[#E5E7EB]">
                         <span className="mr-2">💡</span>
                         Competitive Advantage:
                         <span className="ml-2 font-normal text-[#E5E7EBCC]">
-                          {rec.competitive_positioning.notes}
+                          {rec.business_impact.competitive_advantage ??
+                            rec.competitive_positioning?.notes}
                         </span>
                       </p>
                     </div>
@@ -661,7 +655,10 @@ export default async function ReportPage(props: ReportPageProps) {
 
         {/* Roadmap */}
         {implementation_roadmap && (
-          <section className="roadmap mb-16 rounded-[28px] border-2 border-[#FFB800] bg-gradient-to-br from-[#FFB8000D] to-[#FF6B6B0D] px-6 py-6 sm:px-8 sm:py-8 report-fade-in-up">
+          <section
+            data-report-scroll
+            className="report-scroll-in roadmap mb-16 rounded-[28px] border-2 border-[#FFB800] bg-gradient-to-br from-[#FFB8000D] to-[#FF6B6B0D] px-6 py-6 sm:px-8 sm:py-8 report-fade-in-up transition-all duration-300 hover:border-[#00D9FF] hover:shadow-[0_20px_40px_rgba(0,217,255,0.2)]"
+          >
             <h2 className="text-3xl sm:text-4xl font-semibold text-center bg-gradient-to-r from-[#FFB800] to-[#FF6B6B] bg-clip-text text-transparent mb-8">
               Implementation Roadmap
             </h2>
@@ -681,6 +678,7 @@ export default async function ReportPage(props: ReportPageProps) {
                           item.solution_id &&
                           recommendationIndex[item.solution_id];
                         const outcomes =
+                          linked?.business_impact?.key_outcomes ??
                           linked?.business_impact?.expected_outcomes;
                         const stepNumber = roadmapStep++;
 
@@ -726,10 +724,15 @@ export default async function ReportPage(props: ReportPageProps) {
                           item.solution_id &&
                           recommendationIndex[item.solution_id];
                         const outcomes =
+                          linked?.business_impact?.key_outcomes ??
                           linked?.business_impact?.expected_outcomes;
                         const stepNumber = roadmapStep++;
-
                         const label = linked?.title ?? item.solution_id;
+                        const whyText =
+                          item.why_medium_term ??
+                          (Array.isArray(item.depends_on) && item.depends_on.length > 0
+                            ? `Depends on: ${item.depends_on.join(", ")}`
+                            : null);
 
                         return (
                           <div
@@ -739,9 +742,9 @@ export default async function ReportPage(props: ReportPageProps) {
                             <div className="timeline-solution text-base sm:text-lg font-semibold text-white">
                               {stepNumber}. {label}
                             </div>
-                            {item.why_medium_term && (
+                            {whyText && (
                               <p className="timeline-why text-[13px] text-[#E5E7EBCC] mb-1.5">
-                                {item.why_medium_term}
+                                {whyText}
                               </p>
                             )}
                             {Array.isArray(outcomes) && outcomes.length > 0 && (
@@ -771,10 +774,15 @@ export default async function ReportPage(props: ReportPageProps) {
                           item.solution_id &&
                           recommendationIndex[item.solution_id];
                         const outcomes =
+                          linked?.business_impact?.key_outcomes ??
                           linked?.business_impact?.expected_outcomes;
                         const stepNumber = roadmapStep++;
-
                         const label = linked?.title ?? item.solution_id;
+                        const whyText =
+                          item.why_long_term ??
+                          (Array.isArray(item.depends_on) && item.depends_on.length > 0
+                            ? `Depends on: ${item.depends_on.join(", ")}`
+                            : null);
 
                         return (
                           <div
@@ -784,9 +792,9 @@ export default async function ReportPage(props: ReportPageProps) {
                             <div className="timeline-solution text-base sm:text-lg font-semibold text-white">
                               {stepNumber}. {label}
                             </div>
-                            {item.why_long_term && (
+                            {whyText && (
                               <p className="timeline-why text-[13px] text-[#E5E7EBCC] mb-1.5">
-                                {item.why_long_term}
+                                {whyText}
                               </p>
                             )}
                             {Array.isArray(outcomes) && outcomes.length > 0 && (
