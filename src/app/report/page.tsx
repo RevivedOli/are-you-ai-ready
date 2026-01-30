@@ -1,4 +1,5 @@
 import { supabaseServer } from "@/lib/supabase.server";
+import { CalendlyCTA } from "./CalendlyCTA";
 import { RecommendationTypeBadge } from "./RecommendationTypeBadge";
 import { ReportScrollAnimations } from "./ReportScrollAnimations";
 
@@ -218,9 +219,39 @@ export default async function ReportPage(props: ReportPageProps) {
                 >
                   <div className="flex items-start justify-between gap-3 border-b border-white/10 pb-4 mb-4">
                     <div>
-                      <h3 className="text-xl sm:text-2xl font-semibold text-white mb-1">
-                        {comp.name}
-                      </h3>
+                      <div className="flex items-center gap-2 flex-wrap mb-1">
+                        <h3 className="text-xl sm:text-2xl font-semibold text-white">
+                          {comp.name}
+                        </h3>
+                        {(comp.website ?? comp.url ?? comp.website_url) && (
+                          <a
+                            href={
+                              (comp.website ?? comp.url ?? comp.website_url) as string
+                            }
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex shrink-0 items-center justify-center rounded-lg p-1.5 text-[#9CA3AF] transition-colors hover:bg-white/10 hover:text-[#00D9FF] focus:outline-none focus:ring-2 focus:ring-[#00D9FF] focus:ring-offset-2 focus:ring-offset-[#0A0E27]"
+                            aria-label={`Open ${comp.name ?? "competitor"} website`}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              aria-hidden
+                            >
+                              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                              <polyline points="15 3 21 3 21 9" />
+                              <line x1="10" y1="14" x2="21" y2="3" />
+                            </svg>
+                          </a>
+                        )}
+                      </div>
                       <div className="flex items-center gap-2 text-xs text-[#D1D5DB]">
                         <span>📍</span>
                         <span>
@@ -378,121 +409,101 @@ export default async function ReportPage(props: ReportPageProps) {
           </section>
         )}
 
-        {/* Priority matrix */}
-        {priority_matrix && (
-          <section className="priority-matrix mb-16 report-fade-in-up">
-            <div className="text-center mb-10">
-              <h2 className="text-3xl sm:text-4xl font-semibold bg-gradient-to-r from-[#FFB800] to-[#FF6B6B] bg-clip-text text-transparent mb-2">
-                Priority Matrix
-              </h2>
-              <p className="text-sm sm:text-base text-[#D1D5DB]">
-                Solutions mapped by impact and implementation effort.
-              </p>
-            </div>
-
-            <div className="grid gap-6 sm:grid-cols-2">
-              <div
-                data-report-scroll
-                className="report-scroll-in rounded-2xl border-2 border-[#4ECDC4] bg-gradient-to-br from-[#4ECDC41A] to-[#4ECDC40D] px-5 py-5 transition-all duration-300 hover:-translate-y-[5px] hover:border-[#00D9FF] hover:shadow-[0_20px_40px_rgba(0,217,255,0.2)]"
-              >
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#E5E7EB] mb-4">
-                  <span className="inline-flex h-2 w-2 rounded-full bg-[#4ECDC4]" />
-                  🎯 Quick Wins – High Impact, Low Effort
-                </div>
-                {Array.isArray(priority_matrix.high_impact_low_effort) &&
-                priority_matrix.high_impact_low_effort.length > 0 ? (
-                  priority_matrix.high_impact_low_effort.map((item: string) => (
-                    <div
-                      key={item}
-                      className="mb-2 last:mb-0 cursor-pointer rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-[#F9FAFB] transition-all duration-300 hover:translate-x-[5px] hover:border-white/30 hover:bg-white/10"
-                    >
-                      {item}
-                    </div>
-                  ))
-                ) : (
-                  <p className="text-xs italic text-[#9CA3AF] text-center py-3">
-                    No solutions in this quadrant yet.
-                  </p>
-                )}
+        {/* Priority matrix – only quadrants with solutions */}
+        {priority_matrix && (() => {
+          const quads = [
+            {
+              key: "quick-wins",
+              items: priority_matrix.high_impact_low_effort,
+              title: "Quick Wins – High Impact, Low Effort",
+              icon: "🎯",
+              dot: "bg-[#4ECDC4]",
+              border: "border-[#4ECDC4]",
+              bg: "from-[#4ECDC41A] to-[#4ECDC40D]",
+            },
+            {
+              key: "strategic",
+              items: priority_matrix.high_impact_high_effort,
+              title: "Strategic – High Impact, High Effort",
+              icon: "🚀",
+              dot: "bg-[#FFB800]",
+              border: "border-[#FFB800]",
+              bg: "from-[#FFB8001A] to-[#FFB8000D]",
+            },
+            {
+              key: "low-priority",
+              items: priority_matrix.low_impact_low_effort,
+              title: "Low Priority – Low Impact, Low Effort",
+              icon: "⚡",
+              dot: "bg-[#9CA3AF]",
+              border: "border-[#9CA3AF]",
+              bg: "from-[#9CA3AF1A] to-[#9CA3AF0D]",
+            },
+            {
+              key: "reconsider",
+              items: priority_matrix.low_impact_high_effort,
+              title: "Reconsider – Low Impact, High Effort",
+              icon: "⚠️",
+              dot: "bg-[#FF6B6B]",
+              border: "border-[#FF6B6B]",
+              bg: "from-[#FF6B6B1A] to-[#FF6B6B0D]",
+            },
+          ].filter(
+            (q) => Array.isArray(q.items) && q.items.length > 0
+          );
+          if (quads.length === 0) return null;
+          return (
+            <section className="priority-matrix mb-16 report-fade-in-up">
+              <div className="text-center mb-10">
+                <h2 className="text-3xl sm:text-4xl font-semibold bg-gradient-to-r from-[#FFB800] to-[#FF6B6B] bg-clip-text text-transparent mb-2">
+                  Priority Matrix
+                </h2>
+                <p className="text-sm sm:text-base text-[#D1D5DB]">
+                  Solutions mapped by impact and implementation effort.
+                </p>
               </div>
 
-              <div
-                data-report-scroll
-                className="report-scroll-in rounded-2xl border-2 border-[#FFB800] bg-gradient-to-br from-[#FFB8001A] to-[#FFB8000D] px-5 py-5 transition-all duration-300 hover:-translate-y-[5px] hover:border-[#00D9FF] hover:shadow-[0_20px_40px_rgba(0,217,255,0.2)]"
-              >
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#E5E7EB] mb-4">
-                  <span className="inline-flex h-2 w-2 rounded-full bg-[#FFB800]" />
-                  🚀 Strategic – High Impact, High Effort
-                </div>
-                {Array.isArray(priority_matrix.high_impact_high_effort) &&
-                priority_matrix.high_impact_high_effort.length > 0 ? (
-                  priority_matrix.high_impact_high_effort.map((item: string) => (
-                    <div
-                      key={item}
-                      className="mb-2 last:mb-0 cursor-pointer rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-[#F9FAFB] transition-all duration-300 hover:translate-x-[5px] hover:border-white/30 hover:bg-white/10"
-                    >
-                      {item}
+              <div className="grid gap-6 sm:grid-cols-2">
+                {quads.map((q) => (
+                  <div
+                    key={q.key}
+                    data-report-scroll
+                    className={`report-scroll-in rounded-2xl border-2 ${q.border} bg-gradient-to-br ${q.bg} px-5 py-5 transition-all duration-300 hover:-translate-y-[5px] hover:border-[#00D9FF] hover:shadow-[0_20px_40px_rgba(0,217,255,0.2)]`}
+                  >
+                    <div className={`flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#E5E7EB] mb-4`}>
+                      <span className={`inline-flex h-2 w-2 rounded-full ${q.dot}`} />
+                      {q.icon} {q.title}
                     </div>
-                  ))
-                ) : (
-                  <p className="text-xs italic text-[#9CA3AF] text-center py-3">
-                    No solutions in this quadrant yet.
-                  </p>
-                )}
+                    {q.items!.map((item: string) => {
+                      const linked = recommendationIndex[item];
+                      const label = linked?.title ?? item;
+                      const oneLiner =
+                        linked?.problem_opportunity ??
+                        linked?.solution_description ??
+                        linked?.summary ??
+                        null;
+                      return (
+                        <div
+                          key={item}
+                          className="mb-2 last:mb-0 cursor-pointer rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm transition-all duration-300 hover:translate-x-[5px] hover:border-white/30 hover:bg-white/10"
+                        >
+                          <div className="font-semibold text-[#F9FAFB]">
+                            {label}
+                          </div>
+                          {oneLiner && (
+                            <p className="mt-1 text-xs leading-snug text-[#9CA3AF] line-clamp-2">
+                              {oneLiner}
+                            </p>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                ))}
               </div>
-
-              <div
-                data-report-scroll
-                className="report-scroll-in rounded-2xl border-2 border-[#9CA3AF] bg-gradient-to-br from-[#9CA3AF1A] to-[#9CA3AF0D] px-5 py-5 transition-all duration-300 hover:-translate-y-[5px] hover:border-[#00D9FF] hover:shadow-[0_20px_40px_rgba(0,217,255,0.2)]"
-              >
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#E5E7EB] mb-4">
-                  <span className="inline-flex h-2 w-2 rounded-full bg-[#9CA3AF]" />
-                  ⚡ Low Priority – Low Impact, Low Effort
-                </div>
-                {Array.isArray(priority_matrix.low_impact_low_effort) &&
-                priority_matrix.low_impact_low_effort.length > 0 ? (
-                  priority_matrix.low_impact_low_effort.map((item: string) => (
-                    <div
-                      key={item}
-                      className="mb-2 last:mb-0 cursor-pointer rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-[#F9FAFB] transition-all duration-300 hover:translate-x-[5px] hover:border-white/30 hover:bg-white/10"
-                    >
-                      {item}
-                    </div>
-                  ))
-                ) : (
-                  <p className="text-xs italic text-[#9CA3AF] text-center py-3">
-                    No solutions in this quadrant.
-                  </p>
-                )}
-              </div>
-
-              <div
-                data-report-scroll
-                className="report-scroll-in rounded-2xl border-2 border-[#FF6B6B] bg-gradient-to-br from-[#FF6B6B1A] to-[#FF6B6B0D] px-5 py-5 transition-all duration-300 hover:-translate-y-[5px] hover:border-[#00D9FF] hover:shadow-[0_20px_40px_rgba(0,217,255,0.2)]"
-              >
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#E5E7EB] mb-4">
-                  <span className="inline-flex h-2 w-2 rounded-full bg-[#FF6B6B]" />
-                  ⚠️ Reconsider – Low Impact, High Effort
-                </div>
-                {Array.isArray(priority_matrix.low_impact_high_effort) &&
-                priority_matrix.low_impact_high_effort.length > 0 ? (
-                  priority_matrix.low_impact_high_effort.map((item: string) => (
-                    <div
-                      key={item}
-                      className="mb-2 last:mb-0 cursor-pointer rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-[#F9FAFB] transition-all duration-300 hover:translate-x-[5px] hover:border-white/30 hover:bg-white/10"
-                    >
-                      {item}
-                    </div>
-                  ))
-                ) : (
-                  <p className="text-xs italic text-[#9CA3AF] text-center py-3">
-                    No solutions in this quadrant.
-                  </p>
-                )}
-              </div>
-            </div>
-          </section>
-        )}
+            </section>
+          );
+        })()}
 
         {/* Detailed recommendations */}
         {Array.isArray(recommendations) && recommendations.length > 0 && (
@@ -815,7 +826,10 @@ export default async function ReportPage(props: ReportPageProps) {
         )}
 
         {/* Footer */}
-        <footer className="mt-10 pt-6 border-t border-white/10 text-center report-fade-in-up">
+        <footer className="mt-10 pt-6 border-t border-white/10 text-center report-fade-in-up space-y-6">
+          <div>
+            <CalendlyCTA />
+          </div>
           <p className="text-[11px] uppercase tracking-[0.18em] text-[#9CA3AF]">
             AI Opportunities Report • Generated for {companyName} • Strategic
             Implementation Guide
