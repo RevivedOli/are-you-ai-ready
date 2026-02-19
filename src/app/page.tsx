@@ -121,10 +121,7 @@ export default function Home() {
       case "industry":
         return form.industry.trim().length > 1;
       case "website":
-        return (
-          form.websiteUrl.trim().length > 0 ||
-          form.companyName.trim().length > 1
-        );
+        return form.websiteUrl.trim().length > 0;
       case "companySize":
         return Boolean(form.companySize);
       case "aiAdoption":
@@ -327,16 +324,16 @@ export default function Home() {
           <>
             <div className="space-y-2">
               <h2 className="text-2xl font-bold text-white">
-                Do you have a website we can look at?
+                What&apos;s your website address?
               </h2>
               <p className="text-slate-400">
-                Sharing your site lets the AI understand what you do, who you serve, and how you position yourself. If you don&apos;t have a site, just share your company name instead.
+                Sharing your site lets the AI understand what you do, who you serve, and how you position yourself.
               </p>
             </div>
             <div className="space-y-5">
               <div className="space-y-2">
                 <label className="block text-sm font-semibold text-slate-300">
-                  Website URL (preferred)
+                  Website URL
                 </label>
                 <input
                   type="url"
@@ -344,23 +341,6 @@ export default function Home() {
                   placeholder="https://yourcompany.com"
                   value={form.websiteUrl}
                   onChange={(e) => update("websiteUrl", e.target.value)}
-                />
-              </div>
-              <div className="flex items-center gap-2 text-xs text-slate-500">
-                <span className="h-px flex-1 bg-white/10" />
-                or
-                <span className="h-px flex-1 bg-white/10" />
-              </div>
-              <div className="space-y-2">
-                <label className="block text-sm font-semibold text-slate-300">
-                  Company name (if you don&apos;t have a website)
-                </label>
-                <input
-                  type="text"
-                  className="w-full rounded-xl border border-white/10 bg-slate-800/50 px-4 py-3.5 text-white placeholder-slate-500 backdrop-blur-sm transition focus:border-indigo-500 focus:bg-slate-800/80 focus:outline-none focus:ring-4 focus:ring-indigo-500/20"
-                  placeholder="e.g. Acme Consulting"
-                  value={form.companyName}
-                  onChange={(e) => update("companyName", e.target.value)}
                 />
               </div>
             </div>

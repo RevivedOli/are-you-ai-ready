@@ -64,6 +64,12 @@ export default function ThankYouPage() {
                     <p className="mx-auto max-w-2xl text-xl text-slate-300">
                       We&apos;ve received your information and are preparing your personalized AI readiness report.
                     </p>
+                    <p className="mx-auto max-w-2xl text-base text-slate-400 mt-2">
+                      If you haven&apos;t submitted before, you should receive an email with your report link within the next 20 minutes.
+                    </p>
+                    <p className="mx-auto max-w-2xl text-sm text-amber-400/90 mt-3 font-medium">
+                      You can only run this report once.
+                    </p>
                   </div>
 
                   {/* Divider */}
@@ -150,15 +156,15 @@ export default function ThankYouPage() {
                           <div>
                             <h3 className="mb-1 font-semibold text-white">Email Delivery</h3>
                             <p className="text-sm text-slate-400">
-                              You&apos;ll receive your personalized AI readiness report within 24–48 hours, along with next steps for implementation.
+                              If this is your first submission, expect your report link within the next 20 minutes. You can only run this report once per email.
                             </p>
                           </div>
                         </div>
                       </div>
                       <div className="border-t border-white/5 pt-4">
                         <div className="flex items-center justify-between text-sm">
-                          <span className="text-slate-400">Estimated delivery</span>
-                          <span className="font-semibold text-indigo-400">24–48 hours</span>
+                          <span className="text-slate-400">Estimated delivery (first-time)</span>
+                          <span className="font-semibold text-indigo-400">Within 20 minutes</span>
                         </div>
                       </div>
                     </div>

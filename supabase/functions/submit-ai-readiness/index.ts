@@ -51,9 +51,9 @@ Deno.serve(async (req) => {
     );
   }
 
-  if (!body.websiteUrl && !body.companyName) {
+  if (!body.websiteUrl || !body.websiteUrl.trim()) {
     return new Response(
-      JSON.stringify({ error: "Website URL or company name is required" }),
+      JSON.stringify({ error: "Website URL is required" }),
       {
         status: 400,
         headers: { "Content-Type": "application/json" },

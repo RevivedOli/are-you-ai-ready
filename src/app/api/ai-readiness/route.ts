@@ -40,11 +40,11 @@ export async function POST(request: Request) {
     );
   }
 
-  // At least one identifier for the business.
-  if (!body.websiteUrl && !body.companyName) {
+  // Website URL is required.
+  if (!body.websiteUrl || !body.websiteUrl.trim()) {
     return new Response(
       JSON.stringify({
-        error: "Website URL or company name is required",
+        error: "Website URL is required",
       }),
       { status: 400, headers: { "Content-Type": "application/json" } },
     );
